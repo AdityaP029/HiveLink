@@ -8,16 +8,16 @@
 #endif
 #define DHTPIN D3
 #define DHTTYPE DHT11
-#define sensorPower D7
-#define sensorPin A0
-#define LDR_PIN D8
-#define SERVO_PIN D4
 DHT dht(DHTPIN, DHTTYPE);
+#define sensorPower D1
+#define sensorPin A0
+#define LDR_PIN D2
+#define SERVO_PIN D5
 Servo servo;
 
 //pins:
-const int HX711_dout = D2; //mcu > HX711 dout pin
-const int HX711_sck = D1; //mcu > HX711 sck pin
+const int HX711_dout = D6; //mcu > HX711 dout pin
+const int HX711_sck = D7; //mcu > HX711 sck pin
 
 //HX711 constructor:
 HX711_ADC LoadCell(HX711_dout, HX711_sck);
@@ -40,7 +40,7 @@ void setup() {
   // This delay gives the chance to wait for a Serial Monitor without blocking if none is found
   delay(1500);
   float calibrationValue;
-  calibrationValue = 105.35;
+  calibrationValue = 10.35;
 #if defined(ESP8266)|| defined(ESP32)
 #endif
   unsigned long stabilizingtime = 2000;
@@ -54,13 +54,23 @@ void setup() {
     LoadCell.setCalFactor(calibrationValue); // set calibration value (float)
     Serial.println("Startup is complete");
   }
+
   // Defined in thingProperties.h
   initProperties();
+
   // Connect to Arduino IoT Cloud
   ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  /*
+     The following function allows you to obtain more information
+     related to the state of network and IoT Cloud connection and errors
+     the higher number the more granular information you’ll get.
+     The default is 0 (only errors).
+     Maximum is 4
+  */
   setDebugMessageLevel(2);
   ArduinoCloud.printDebugInfo();
 }
+
 void loop() {
   ArduinoCloud.update();
   // Your code here
@@ -113,12 +123,33 @@ void loop() {
   if (LoadCell.getTareStatus() == true) {
     Serial.println("Tare complete");
   }
+  //  weight = newDataReady;
+  // Read the LDR sensor value
 }
 
 int readSensor() {
-  digitalWrite(sensorPower, HIGH);	    // Turn the sensor ON
-  delay(10);							              // wait 10 milliseconds
+  digitalWrite(sensorPower, HIGH);	// Turn the sensor ON
+  delay(10);							// wait 10 milliseconds
   float val = analogRead(sensorPin);		// Read the analog value form sensor
-  digitalWrite(sensorPower, LOW);		    // Turn the sensor OFF
-  return val;							              // send current reading
+  digitalWrite(sensorPower, LOW);		// Turn the sensor OFF
+  return val;							// send current reading
+}
+
+/*
+  Since SyrupQuantity is READ_WRITE variable, onSyrupQuantityChange() is
+  executed every time a new value is received from IoT Cloud.
+*/
+void onSyrupQuantityChange()  {
+  // Add your code here to act upon SyrupQuantity change
+}
+
+void onTemperatureChange()  {
+  // Add your code here to act upon Temperature change
+}
+/*
+  Since Gate is READ_WRITE variable, onGateChange() is
+  executed every time a new value is received from IoT Cloud.
+*/
+void onGateChange()  {
+  // Add your code here to act upon Gate change
 }
