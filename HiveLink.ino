@@ -24,8 +24,8 @@ unsigned long previousSerialMillis = 0;
 const unsigned long sendInterval = 10000;  // 10 seconds in milliseconds
 const unsigned long serialdelay = 4000;
 // WiFi credentials
-const char* ssid = "TP-Link_3018";
-const char* password = "75285654";
+const char* ssid = "Network name";
+const char* password = "Password";
 
 // IFTTT and Google Script host URLs
 const char* host = "maker.ifttt.com";
@@ -34,7 +34,7 @@ const int httpsPort = 443;
 WiFiClientSecure client;
 
 // Google Apps Script API Key
-String GAS_ID = "AKfycbyE2lkfeReTAE8mgIgqP8RMjMHQkLO1EgE1PPgj9exYe9GO_Gi-rGXJLHVAGea4nPQLug";
+String GAS_ID = "API Key goes here";
 
 // Load cell amplifier pins
 const int HX711_dout = D6;  // MCU > HX711 dout pin
