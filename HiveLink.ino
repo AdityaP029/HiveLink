@@ -84,7 +84,7 @@ void setup() {
   delay(1500);
 
   // Calibration value for load cell
-  float calibrationValue = 10.35;
+  float calibrationValue = 105.35;
 
   // Stabilization time and tare for load cell
   unsigned long stabilizingtime = 2000;
