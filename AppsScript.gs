@@ -7,8 +7,8 @@ function doGet(e) {
   if (e.parameter == 'undefined') {
     result = 'No Parameters';
   } else {
-    // Spreadsheet ID
-    var sheet_id = 'Google Sheets ID';
+    // Spreadsheet ID (replace with a placeholder)
+    var sheet_id = 'YourGoogleSheetsID';
     // Open the spreadsheet and select the active sheet
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();
     // Get the next available row for data entry
@@ -18,7 +18,8 @@ function doGet(e) {
     var Curr_Date = new Date();
     rowData[0] = Curr_Date; // Date in column A
     
-    var Curr_Time = Utilities.formatDate(Curr_Date, "Asia/Kolkata", "h:mm a");
+    // Timezone (replace with a generic or non-specific timezone)
+    var Curr_Time = Utilities.formatDate(Curr_Date, "YourTimeZone", "h:mm a");
     rowData[1] = Curr_Time; // Time in column B
     
     // Iterate through the request parameters and process them
